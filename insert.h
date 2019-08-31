@@ -9,24 +9,16 @@ class InsertSort : public Sort {
         InsertSort(int *elements, size_t size) : Sort(elements, size) {}
 
         void execute() {
-            std::vector<int> v;
-            if(size > 0) v.push_back(elements[0]);
-            for(int i = 1; i < size; ++i){
-                int current = elements[i];
-                vector<int>::iterator it = v.begin();
-                bool inserted = false;
-                for(int j = 0; j < v.size(); ++j) {
-                    if(v[j] >= current) {
-                        v.insert(it,current);
-                        inserted = true;
-                        break;
-                    }
-                    it++;
+            int i, valueToInsert, j;
+            for(int i = 0; i < size; ++i) {
+                valueToInsert = elements[i];
+                j = i-1;
+                while(j >= 0 && elements[j] > valueToInsert) {
+                    elements[j+1] = elements[j];
+                    j--;
                 }
-                if(!inserted) v.insert(it,current);
+                elements[j+1] = valueToInsert;
             }
-            for(int i = 0; i < size; ++i)
-                elements[i] = v[i];
         }
 
         inline string name() { return "InsertSort"; }
